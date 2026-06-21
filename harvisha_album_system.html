@@ -1,0 +1,741 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harvisha Pictures - Album Selection Portal</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <link class="apple-touch-icon" sizes="512x512" href="/images/favicon.png">
+   <style>
+        /* Harvisha Custom Theme Variables */
+        :root {
+            --harvisha-gold: #d4af37; /* Elegant Gold */
+            --harvisha-dark: #121212; /* Deep Black/Gray */
+            --harvisha-surface: #1e1e1e; /* Slightly lighter for cards */
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: var(--harvisha-dark);
+            color: #ffffff;
+        }
+        
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hide { display: none !important; }
+        
+        /* Custom UI Elements */
+        .gold-border { border-color: var(--harvisha-gold); }
+        .gold-text { color: var(--harvisha-gold); }
+        .gold-bg { background-color: var(--harvisha-gold); }
+        .gold-bg:hover { background-color: #bfa136; }
+        
+        .selected-ring { 
+            outline: 3px solid var(--harvisha-gold); 
+            outline-offset: -3px; 
+        }
+
+        /* Subtle glow for selected items */
+        .selected-glow {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Smooth inputs */
+        input, select, textarea {
+            background-color: #2a2a2a !important;
+            border-color: #404040 !important;
+            color: white !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--harvisha-gold) !important;
+            box-shadow: 0 0 0 1px var(--harvisha-gold) !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--harvisha-dark); }
+        ::-webkit-scrollbar-thumb { background: #404040; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--harvisha-gold); }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ========================================== -->
+    <div id="login-screen" class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Subtle background overlay -->
+        <div class="absolute inset-0 bg-[url('images/Picture%2014.jpg')] bg-cover bg-center opacity-20 blur-sm"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/10 to-transparent"></div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <h2 class="mt-2 text-center text-4xl font-bold serif-font text-white tracking-wide">Harvisha Pictures</h2>
+            <p class="mt-3 text-center text-sm text-gray-400 uppercase tracking-[0.2em]">Album Selection Portal</p>
+        </div>
+
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <div class="bg-[#1e1e1e] py-10 px-4 shadow-2xl sm:rounded-xl sm:px-10 border border-[#333]">
+                <form id="login-form" class="space-y-6" onsubmit="handleLogin(event)">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300">Username</label>
+                        <input id="login-username" type="text" required class="mt-1 block w-full rounded-md shadow-sm py-3 px-4 focus:outline-none sm:text-sm transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300">Password</label>
+                        <input id="login-password" type="password" required class="mt-1 block w-full rounded-md shadow-sm py-3 px-4 focus:outline-none sm:text-sm transition-colors">
+                    </div>
+                    <div id="login-error" class="hide text-red-400 text-sm text-center font-medium">Invalid credentials. Please try again.</div>
+                    
+                    <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-black gold-bg transition-colors uppercase tracking-wider mt-4">
+                        <i data-lucide="log-in" class="w-5 h-5 mr-2"></i>
+                        Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MAIN APP WRAPPER (Hidden until logged in) -->
+    <!-- ========================================== -->
+    <div id="app-wrapper" class="hide min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-[#1e1e1e] shadow-md border-b border-[#333] sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="font-bold text-2xl serif-font tracking-wide text-white">Harvisha Pictures</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <span class="text-sm font-medium text-gray-400 hidden sm:inline-block tracking-wider uppercase text-[11px]">
+                        Welcome, <span id="current-user-name" class="text-white font-semibold"></span>
+                    </span>
+                    <button onclick="logout()" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span class="uppercase tracking-wider text-[11px]">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
+            
+            <!-- CLIENT VIEW -->
+            <div id="client-view" class="hide space-y-8 pb-32">
+                
+                <!-- Client Header -->
+                <div class="bg-[#1e1e1e] p-8 rounded-xl shadow-lg border border-[#333] flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-64 h-64 bg-[var(--harvisha-gold)] opacity-5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <h1 id="client-header-title" class="text-3xl font-bold text-white serif-font tracking-wide">Album Title</h1>
+                        <p class="text-gray-400 mt-2 font-light">Select your favorite moments for the final premium album.</p>
+                    </div>
+                    <div class="text-center md:text-right relative z-10 border-t md:border-t-0 md:border-l border-[#333] pt-4 md:pt-0 md:pl-8">
+                        <div id="client-selected-count" class="text-5xl font-light gold-text serif-font">0</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mt-1">Selections</div>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="success-message" class="hide bg-[#1a2e1a] border border-[#2e522e] rounded-xl p-6 flex items-center gap-4 text-[#8fce8f]">
+                    <i data-lucide="check-circle" class="w-8 h-8 flex-shrink-0"></i>
+                    <div>
+                        <h3 class="font-bold text-white text-lg tracking-wide">Selections Finalized</h3>
+                        <p class="text-sm mt-1 opacity-80">Thank you. The Harvisha team has been notified and will begin processing your cinematic album.</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Images dynamically injected here -->
+                </div>
+
+                <!-- Sticky Bottom Bar -->
+                <div id="bottom-action-bar" class="fixed bottom-0 left-0 right-0 bg-[#1e1e1e]/95 backdrop-blur-md border-t border-[#333] p-5 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+                    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex flex-col">
+                            <span id="bottom-selection-text" class="font-medium text-white text-lg serif-font">0 Images Selected</span>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest">For Premium Album</span>
+                        </div>
+                        <button id="submit-btn" onclick="submitSelection()" class="w-full sm:w-auto px-8 py-3 rounded-md font-bold transition-all flex justify-center items-center gap-2 bg-[#2a2a2a] text-gray-500 cursor-not-allowed uppercase tracking-wider text-xs" disabled>
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            Confirm Selections
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN VIEW -->
+            <div id="admin-view" class="hide max-w-5xl mx-auto space-y-8">
+                
+                <!-- Admin Header -->
+                <div class="bg-[#1e1e1e] p-8 rounded-xl shadow-lg border border-[#333] flex items-center gap-6 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 w-64 h-64 bg-[var(--harvisha-gold)] opacity-5 rounded-full blur-3xl -ml-20 -mt-20 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <h1 class="text-3xl font-bold text-white serif-font tracking-wide">Studio Dashboard</h1>
+                        <p class="text-gray-400 mt-2 font-light">Manage client portals, upload proofs, and export final selections.</p>
+                    </div>
+                </div>
+
+                <!-- Admin Navigation -->
+                <div class="flex gap-2 border-b border-[#333] mb-8 overflow-x-auto pb-px">
+                    <button onclick="switchAdminTab('admin-create')" id="tab-admin-create" class="pb-4 px-4 border-b-2 border-[var(--harvisha-gold)] gold-text font-semibold uppercase tracking-wider text-xs whitespace-nowrap transition-colors">Create Client</button>
+                    <button onclick="switchAdminTab('admin-upload')" id="tab-admin-upload" class="pb-4 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-semibold uppercase tracking-wider text-xs whitespace-nowrap transition-colors">Upload Photos</button>
+                    <button onclick="switchAdminTab('admin-submissions')" id="tab-admin-submissions" class="pb-4 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-semibold uppercase tracking-wider text-xs whitespace-nowrap transition-colors">Client Selections</button>
+                </div>
+
+                <!-- Tab: Create Client -->
+                <div id="admin-create" class="bg-[#1e1e1e] rounded-xl shadow-lg border border-[#333] p-8">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-[#333]">
+                        <i data-lucide="user-plus" class="w-5 h-5 gold-text"></i>
+                        <h3 class="text-xl font-semibold text-white serif-font">New Client Portal</h3>
+                    </div>
+                    <form id="create-client-form" onsubmit="handleCreateClient(event)" class="space-y-5 max-w-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Client Name</label>
+                                <input id="new-client-name" type="text" required placeholder="e.g. Rahul & Sneha" class="block w-full rounded-md py-2 px-3 focus:outline-none sm:text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Event/Album</label>
+                                <input id="new-client-album" type="text" required placeholder="e.g. Wedding Films 2026" class="block w-full rounded-md py-2 px-3 focus:outline-none sm:text-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 bg-[#121212] p-5 rounded-lg border border-[#333]">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Portal Username</label>
+                                <input id="new-client-username" type="text" required class="block w-full rounded-md py-2 px-3 focus:outline-none sm:text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Portal Password</label>
+                                <input id="new-client-password" type="text" required class="block w-full rounded-md py-2 px-3 focus:outline-none sm:text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-bold text-black gold-bg transition-colors uppercase tracking-widest mt-4">
+                            Generate Portal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tab: Upload Photos -->
+                <div id="admin-upload" class="hide bg-[#1e1e1e] rounded-xl shadow-lg border border-[#333] p-8">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-[#333]">
+                        <i data-lucide="upload-cloud" class="w-5 h-5 gold-text"></i>
+                        <h3 class="text-xl font-semibold text-white serif-font">Upload Proofs</h3>
+                    </div>
+                    <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-6 max-w-lg">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Select Target Portal</label>
+                            <select id="upload-client-select" required class="block w-full rounded-md py-3 px-3 focus:outline-none sm:text-sm cursor-pointer">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <div class="border-2 border-dashed border-[#404040] rounded-xl p-8 text-center hover:border-[var(--harvisha-gold)] transition-colors bg-[#121212]">
+                            <i data-lucide="image" class="w-10 h-10 mx-auto text-gray-500 mb-4"></i>
+                            <label class="block text-sm font-medium text-white mb-2 cursor-pointer">
+                                <span class="gold-text hover:underline">Browse files</span> or drag and drop
+                                <input id="upload-files" type="file" multiple accept="image/*" required class="sr-only">
+                            </label>
+                            <p class="text-xs text-gray-500">JPG, PNG up to 10MB each</p>
+                            <div id="upload-file-count" class="mt-3 text-sm font-bold gold-text hide">0 files selected</div>
+                        </div>
+
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-md shadow-sm text-sm font-bold text-black gold-bg transition-colors uppercase tracking-widest">
+                            Upload to Portal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tab: Submissions -->
+                <div id="admin-submissions" class="hide space-y-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5" id="admin-clients-list">
+                        <!-- Client Cards Injected Here -->
+                    </div>
+                    
+                    <div id="admin-submission-details" class="hide bg-[#1e1e1e] rounded-xl shadow-2xl border border-[#333] overflow-hidden mt-8">
+                        <div class="border-b border-[#333] bg-[#121212] px-8 py-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h3 id="admin-sub-title" class="text-2xl font-bold text-white serif-font">Client Name</h3>
+                                <p id="admin-sub-album" class="text-sm text-gray-400 mt-1 uppercase tracking-widest text-[10px]">Album Name</p>
+                            </div>
+                            <span id="admin-selected-badge" class="inline-flex items-center px-4 py-2 rounded-md text-xs font-bold bg-[#2a2a2a] text-white border border-[#404040] uppercase tracking-wider">
+                                <span class="gold-text mr-2 text-lg">0</span> Selections
+                            </span>
+                        </div>
+
+                        <div class="p-8 space-y-8">
+                            <div id="admin-empty-state" class="text-center py-16 text-gray-500 bg-[#121212] rounded-lg border border-dashed border-[#333]">
+                                <i data-lucide="clock" class="w-10 h-10 mx-auto mb-3 opacity-50"></i>
+                                <p class="text-sm uppercase tracking-widest">Awaiting Client Selection</p>
+                            </div>
+                            
+                            <div id="admin-data-state" class="hide space-y-8">
+                                <div class="bg-[#121212] p-6 rounded-lg border border-[#333]">
+                                    <div class="flex justify-between items-center mb-4 pb-4 border-b border-[#2a2a2a]">
+                                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest">Export Array (Lightroom Ready)</label>
+                                        <button onclick="copyToClipboard()" class="text-xs gold-text hover:text-white flex items-center gap-2 font-bold transition-colors uppercase tracking-wider bg-[#2a2a2a] px-3 py-1.5 rounded">
+                                            <i data-lucide="copy" class="w-3 h-3" id="copy-icon"></i>
+                                            <span id="copy-text">Copy List</span>
+                                        </button>
+                                    </div>
+                                    <textarea id="filename-textarea" readonly rows="5" class="w-full bg-transparent font-mono text-sm text-gray-300 focus:outline-none resize-none selection:bg-[var(--harvisha-gold)] selection:text-black"></textarea>
+                                </div>
+                                
+                                <div class="flex justify-end gap-4">
+                                    <button onclick="downloadTextFile()" class="flex items-center justify-center px-6 py-3 rounded-md text-xs font-bold text-black gold-bg hover:bg-[#bfa136] transition-colors uppercase tracking-widest">
+                                        <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                                        Export .txt File
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        
+        <footer class="border-t border-[#333] py-6 text-center mt-auto">
+            <p class="text-[10px] text-gray-500 uppercase tracking-[0.2em]">© 2026 Harvisha Pictures. Luxury Cinematic Filmmaking.</p>
+        </footer>
+    </div>
+
+    <!-- Custom Notification/Confirmation Modal -->
+    <div id="custom-modal" class="hide fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity">
+        <div class="bg-[#1e1e1e] border border-[#333] p-6 rounded-xl shadow-2xl max-w-md w-full relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 id="modal-title" class="text-xl font-bold text-white serif-font mb-2">Notice</h3>
+            <p id="modal-message" class="text-gray-400 text-sm mb-8 leading-relaxed">Message goes here.</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeModal()" id="modal-cancel-btn" class="px-5 py-2.5 rounded-md text-xs font-bold text-gray-300 bg-[#2a2a2a] hover:bg-[#333] transition-colors uppercase tracking-wider">Close</button>
+                <button id="modal-confirm-btn" class="hide px-5 py-2.5 rounded-md text-xs font-bold text-black gold-bg hover:bg-[#bfa136] transition-colors uppercase tracking-wider shadow-[0_0_15px_rgba(212,175,55,0.3)]">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // --- DATA & STATE ---
+        const initialMockImages = Array.from({ length: 12 }).map((_, i) => ({
+            id: i + 1,
+            filename: `HARVISHA_WED_${String(i + 1).padStart(3, '0')}.jpg`,
+            url: `https://picsum.photos/seed/harvisha${i + 50}/800/533`
+        }));
+
+        let db = {
+            admin: { username: 'admin', password: 'admin123' },
+            clients: [
+                {
+                    id: 'client_1',
+                    name: 'Rahul & Sneha',
+                    albumName: 'Signature Wedding Film',
+                    username: 'demo',
+                    password: 'demo123',
+                    images: initialMockImages,
+                    selectedImages: [],
+                    isSubmitted: false
+                }
+            ]
+        };
+
+        let currentUser = null;
+        let viewingAdminClient = null;
+
+        // --- CUSTOM MODAL LOGIC ---
+        let modalConfirmCallback = null;
+
+        function showModal(title, message, onConfirm = null) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+
+            if (onConfirm) {
+                confirmBtn.classList.remove('hide');
+                cancelBtn.innerText = "Cancel";
+                modalConfirmCallback = onConfirm;
+                confirmBtn.onclick = () => {
+                    if (modalConfirmCallback) modalConfirmCallback();
+                    closeModal();
+                };
+            } else {
+                confirmBtn.classList.add('hide');
+                cancelBtn.innerText = "Close";
+                modalConfirmCallback = null;
+            }
+
+            document.getElementById('custom-modal').classList.remove('hide');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hide');
+            modalConfirmCallback = null;
+        }
+
+        // File upload listener for styling
+        document.getElementById('upload-files').addEventListener('change', function(e) {
+            const count = e.target.files.length;
+            const textEl = document.getElementById('upload-file-count');
+            if (count > 0) {
+                textEl.innerText = `${count} files queued for portal`;
+                textEl.classList.remove('hide');
+            } else {
+                textEl.classList.add('hide');
+            }
+        });
+
+        // --- INITIALIZATION ---
+        lucide.createIcons();
+
+        // --- AUTH LOGIC ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-username').value;
+            const pass = document.getElementById('login-password').value;
+            const errorMsg = document.getElementById('login-error');
+            
+            errorMsg.classList.add('hide');
+
+            if (user === db.admin.username && pass === db.admin.password) {
+                currentUser = { role: 'admin', data: db.admin };
+                loadApp();
+            } else {
+                const client = db.clients.find(c => c.username === user && c.password === pass);
+                if (client) {
+                    currentUser = { role: 'client', data: client };
+                    loadApp();
+                } else {
+                    errorMsg.classList.remove('hide');
+                }
+            }
+        }
+
+        function loadApp() {
+            document.getElementById('login-screen').classList.add('hide');
+            document.getElementById('app-wrapper').classList.remove('hide');
+            
+            if (currentUser.role === 'client') {
+                document.getElementById('current-user-name').innerText = currentUser.data.name;
+                document.getElementById('client-header-title').innerText = currentUser.data.albumName;
+                document.getElementById('client-view').classList.remove('hide');
+                document.getElementById('admin-view').classList.add('hide');
+                
+                if(currentUser.data.isSubmitted) {
+                    document.getElementById('success-message').classList.remove('hide');
+                    document.getElementById('bottom-action-bar').classList.add('hide');
+                } else {
+                    document.getElementById('success-message').classList.add('hide');
+                    document.getElementById('bottom-action-bar').classList.remove('hide');
+                }
+
+                renderGallery();
+                updateClientUI();
+            } else {
+                document.getElementById('current-user-name').innerText = "Studio Admin";
+                document.getElementById('client-view').classList.add('hide');
+                document.getElementById('admin-view').classList.remove('hide');
+                
+                switchAdminTab('admin-submissions'); // Default admin tab
+                updateAdminDropdowns();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('login-form').reset();
+            document.getElementById('login-screen').classList.remove('hide');
+            document.getElementById('app-wrapper').classList.add('hide');
+        }
+
+        // --- CLIENT GALLERY LOGIC ---
+        function renderGallery() {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = ''; 
+            const client = currentUser.data;
+
+            if (client.images.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500 font-light border border-dashed border-[#333] rounded-xl"><p class="text-xl serif-font mb-2 text-white">No images available.</p>The studio is preparing your files.</div>`;
+                return;
+            }
+
+            client.images.forEach(img => {
+                const isSelected = client.selectedImages.includes(img.filename);
+                const card = document.createElement('div');
+                card.className = `group relative rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ${isSelected ? 'selected-ring selected-glow scale-[0.98]' : 'border border-[#333] hover:border-gray-500'}`;
+                card.onclick = () => toggleSelection(img.filename);
+
+                card.innerHTML = `
+                    <div class="aspect-[3/2] w-full overflow-hidden bg-[#121212]">
+                        <img src="${img.url}" class="w-full h-full object-cover transition-transform duration-700 ${isSelected ? 'scale-100 opacity-90' : 'group-hover:scale-105 opacity-80 group-hover:opacity-100'}" loading="lazy">
+                    </div>
+                    
+                    <!-- Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-80"></div>
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <p class="text-gray-300 text-[10px] font-mono truncate tracking-wider">${img.filename}</p>
+                    </div>
+                    
+                    <div class="absolute top-3 right-3 transition-transform duration-300 ${isSelected ? 'scale-110' : 'scale-100'}">
+                        ${isSelected 
+                            ? `<div class="bg-[var(--harvisha-gold)] text-black rounded-full p-1.5 shadow-lg"><i data-lucide="check" class="w-4 h-4"></i></div>` 
+                            : `<div class="bg-black/50 backdrop-blur-sm text-white/50 rounded-full p-1.5 border border-white/20 group-hover:text-white transition-colors"><i data-lucide="plus" class="w-4 h-4"></i></div>`
+                        }
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleSelection(filename) {
+            if (currentUser.data.isSubmitted) return;
+
+            const client = currentUser.data;
+            if (client.selectedImages.includes(filename)) {
+                client.selectedImages = client.selectedImages.filter(f => f !== filename);
+            } else {
+                client.selectedImages.push(filename);
+            }
+            renderGallery();
+            updateClientUI();
+        }
+
+        function updateClientUI() {
+            const client = currentUser.data;
+            const count = client.selectedImages.length;
+            const total = client.images.length;
+            
+            // Animate number change simply
+            const countEl = document.getElementById('client-selected-count');
+            countEl.innerText = count;
+            countEl.classList.remove('text-white');
+            void countEl.offsetWidth; // trigger reflow
+            countEl.classList.add('text-white');
+
+            document.getElementById('bottom-selection-text').innerText = `${count} of ${total} Chosen`;
+
+            const submitBtn = document.getElementById('submit-btn');
+            if (count > 0 && total > 0) {
+                submitBtn.disabled = false;
+                submitBtn.className = "w-full sm:w-auto px-8 py-3 rounded-md font-bold transition-all flex justify-center items-center gap-2 gold-bg text-black uppercase tracking-wider text-xs shadow-lg hover:shadow-[var(--harvisha-gold)]/20";
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.className = "w-full sm:w-auto px-8 py-3 rounded-md font-bold transition-all flex justify-center items-center gap-2 bg-[#2a2a2a] text-gray-500 cursor-not-allowed uppercase tracking-wider text-xs";
+            }
+        }
+
+        function submitSelection() {
+            if (currentUser.data.selectedImages.length === 0) return;
+            currentUser.data.isSubmitted = true;
+            document.getElementById('success-message').classList.remove('hide');
+            document.getElementById('bottom-action-bar').classList.add('hide');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- ADMIN LOGIC ---
+        function switchAdminTab(tabId) {
+            ['admin-create', 'admin-upload', 'admin-submissions'].forEach(id => {
+                document.getElementById(id).classList.add('hide');
+                const btn = document.getElementById('tab-' + id);
+                btn.className = "pb-4 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-semibold uppercase tracking-wider text-xs whitespace-nowrap transition-colors";
+            });
+            
+            document.getElementById(tabId).classList.remove('hide');
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.className = "pb-4 px-4 border-b-2 border-[var(--harvisha-gold)] gold-text font-semibold uppercase tracking-wider text-xs whitespace-nowrap transition-colors";
+
+            if (tabId === 'admin-submissions') {
+                renderAdminClientsList();
+                document.getElementById('admin-submission-details').classList.add('hide');
+            }
+        }
+
+        function handleCreateClient(e) {
+            e.preventDefault();
+            const newClient = {
+                id: 'client_' + Date.now(),
+                name: document.getElementById('new-client-name').value,
+                albumName: document.getElementById('new-client-album').value,
+                username: document.getElementById('new-client-username').value,
+                password: document.getElementById('new-client-password').value,
+                images: [],
+                selectedImages: [],
+                isSubmitted: false
+            };
+
+            if(db.clients.find(c => c.username === newClient.username)) {
+                showModal("Duplicate Username", "Username already exists in the system. Please choose another.");
+                return;
+            }
+
+            db.clients.push(newClient);
+            showModal("Success", `Portal for ${newClient.name} successfully generated.`);
+            document.getElementById('create-client-form').reset();
+            updateAdminDropdowns();
+            switchAdminTab('admin-upload');
+        }
+
+        function updateAdminDropdowns() {
+            const select = document.getElementById('upload-client-select');
+            select.innerHTML = '<option value="" disabled selected>Choose Portal...</option>';
+            db.clients.forEach(client => {
+                const opt = document.createElement('option');
+                opt.value = client.id;
+                opt.innerText = `${client.name} - ${client.albumName}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function handleUpload(e) {
+            e.preventDefault();
+            const clientId = document.getElementById('upload-client-select').value;
+            const files = document.getElementById('upload-files').files;
+            
+            if(!clientId || files.length === 0) return;
+            const client = db.clients.find(c => c.id === clientId);
+            
+            Array.from(files).forEach((file, index) => {
+                client.images.push({
+                    id: Date.now() + index,
+                    filename: file.name,
+                    url: URL.createObjectURL(file)
+                });
+            });
+
+            showModal("Upload Complete", `Added ${files.length} proofs to ${client.name}'s portal.`);
+            document.getElementById('upload-form').reset();
+            document.getElementById('upload-file-count').classList.add('hide');
+        }
+
+        function renderAdminClientsList() {
+            const container = document.getElementById('admin-clients-list');
+            container.innerHTML = '';
+            
+            if(db.clients.length === 0) return;
+
+            db.clients.forEach(client => {
+                const card = document.createElement('div');
+                card.className = "bg-[#121212] p-5 rounded-xl border border-[#333] cursor-pointer hover:border-[var(--harvisha-gold)] transition-colors group relative overflow-hidden";
+                card.onclick = () => viewClientSubmission(client.id);
+                
+                let statusHtml = client.isSubmitted 
+                    ? `<span class="text-xs font-bold text-[#8fce8f] uppercase tracking-wider bg-[#1a2e1a] px-2 py-1 rounded border border-[#2e522e]"><i data-lucide="check" class="w-3 h-3 inline mr-1 -mt-0.5"></i>Submitted</span>` 
+                    : `<span class="text-xs font-bold text-gray-500 uppercase tracking-wider border border-[#333] px-2 py-1 rounded">Pending</span>`;
+
+                card.innerHTML = `
+                    <div class="absolute top-4 right-4 z-20">
+                        <button onclick="promptDeleteClient(event, '${client.id}', '${client.name}')" class="text-gray-500 hover:text-red-500 transition-colors bg-[#1e1e1e] p-1.5 rounded-full border border-[#333] hover:border-red-500" title="Delete Client">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-[var(--harvisha-gold)] opacity-0 group-hover:opacity-5 transition-opacity rounded-bl-full pointer-events-none"></div>
+                    <h4 class="font-bold text-white serif-font text-lg pr-8">${client.name}</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-1 mb-4 truncate">${client.albumName}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-light text-white">${client.images.length}</span>
+                            <span class="text-[9px] text-gray-500 uppercase tracking-widest">Proofs</span>
+                        </div>
+                        ${statusHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function promptDeleteClient(e, clientId, clientName) {
+            e.stopPropagation(); // Prevent opening the client details side effect
+            showModal(
+                "Delete Client", 
+                `Are you sure you want to completely remove ${clientName}? This will permanently delete their album, credentials, and image selections.`,
+                () => executeDeleteClient(clientId)
+            );
+        }
+
+        function executeDeleteClient(clientId) {
+            db.clients = db.clients.filter(c => c.id !== clientId);
+            
+            // Close details panel if the deleted client was currently being viewed
+            if (viewingAdminClient && viewingAdminClient.id === clientId) {
+                document.getElementById('admin-submission-details').classList.add('hide');
+                viewingAdminClient = null;
+            }
+            
+            updateAdminDropdowns();
+            renderAdminClientsList();
+            showModal("Deleted", "Client data has been permanently removed.");
+        }
+
+        function viewClientSubmission(clientId) {
+            viewingAdminClient = db.clients.find(c => c.id === clientId);
+            const client = viewingAdminClient;
+            
+            document.getElementById('admin-submission-details').classList.remove('hide');
+            document.getElementById('admin-sub-title').innerText = client.name;
+            document.getElementById('admin-sub-album').innerText = client.albumName;
+            
+            const count = client.selectedImages.length;
+            document.getElementById('admin-selected-badge').innerHTML = `<span class="gold-text mr-2 text-lg">${count}</span> Selections`;
+
+            if (count === 0) {
+                document.getElementById('admin-empty-state').classList.remove('hide');
+                document.getElementById('admin-data-state').classList.add('hide');
+            } else {
+                document.getElementById('admin-empty-state').classList.add('hide');
+                document.getElementById('admin-data-state').classList.remove('hide');
+                document.getElementById('filename-textarea').value = client.selectedImages.join(', ');
+            }
+            
+            document.getElementById('admin-submission-details').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('filename-textarea').value;
+            navigator.clipboard.writeText(text).then(() => {
+                const btnText = document.getElementById('copy-text');
+                const icon = document.getElementById('copy-icon');
+                
+                btnText.innerText = 'Copied!';
+                btnText.parentElement.classList.add('text-white');
+                icon.setAttribute('data-lucide', 'check');
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    btnText.innerText = 'Copy List';
+                    btnText.parentElement.classList.remove('text-white');
+                    icon.setAttribute('data-lucide', 'copy');
+                    lucide.createIcons();
+                }, 2000);
+            });
+        }
+
+        function downloadTextFile() {
+            if(!viewingAdminClient) return;
+            const text = viewingAdminClient.selectedImages.join('\n');
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Harvisha_${viewingAdminClient.name.replace(/\s+/g, '')}_Export.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

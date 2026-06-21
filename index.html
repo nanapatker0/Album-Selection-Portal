@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Harvisha Pictures - Studio Portal</title>
+    <title>Harvisha Pictures - Album Selection Portal</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,6 +37,11 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#d4af37] selection:text-black">
 
+    <!-- ========================================== -->
+    <!-- GENERAL MODALS -->
+    <!-- ========================================== -->
+    
+    <!-- Notice Modal -->
     <div id="custom-modal" class="hide fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
         <div class="bg-[#141414] border border-[#333] rounded-xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform transition-all">
             <h3 id="modal-title" class="text-xl sm:text-2xl font-serif text-white mb-2">Notice</h3>
@@ -48,12 +53,15 @@
         </div>
     </div>
 
+    <!-- Edit Credentials Modal -->
     <div id="edit-modal" class="hide fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
         <div class="bg-[#141414] border border-[#333] rounded-xl p-6 sm:p-8 max-w-md w-full shadow-2xl">
             <h3 id="edit-modal-title" class="text-xl sm:text-2xl font-serif text-white mb-4">Edit Credentials</h3>
             <form id="edit-credentials-form" onsubmit="window.submitEditCredentials(event)" class="space-y-4">
                 <input type="hidden" id="edit-target-old-id">
-                <input type="hidden" id="edit-target-type"> <div>
+                <input type="hidden" id="edit-target-type">
+                
+                <div>
                     <label class="block text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Access ID (Username)</label>
                     <input id="edit-username" type="text" required class="w-full bg-[#0a0a0a] border border-[#333] rounded px-3 py-3 sm:py-2 text-white focus-gold text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     <p id="edit-username-warning" class="text-[10px] text-yellow-500 mt-1 hide">Only Head Admins can change Access IDs.</p>
@@ -70,11 +78,38 @@
         </div>
     </div>
 
+    <!-- Upload Progress Modal -->
+    <div id="upload-modal" class="hide fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-[#141414] border border-[#333] rounded-xl p-6 sm:p-8 max-w-md w-full shadow-2xl">
+            <h3 class="text-xl font-serif text-white mb-4">Uploading Images</h3>
+            <div class="w-full bg-[#222] rounded-full h-4 mb-2 overflow-hidden border border-[#333]">
+                <div id="upload-progress-bar" class="bg-[#d4af37] h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-400 mb-4 font-mono">
+                <span id="upload-stats-amount">0 MB / 0 MB</span>
+                <span id="upload-stats-percent" class="text-[#d4af37] font-bold">0%</span>
+            </div>
+            <div class="flex justify-between text-xs text-gray-400 font-mono bg-[#0a0a0a] p-3 rounded border border-[#333]">
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Speed</span>
+                    <span id="upload-stats-speed" class="text-white">Calculating...</span>
+                </div>
+                <div class="flex flex-col text-right">
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Time Left</span>
+                    <span id="upload-stats-time" class="text-white">Calculating...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ========================================== -->
     <div id="login-screen" class="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[url('images/Picture_14.jpg')] bg-cover bg-center">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
         <div class="relative w-full max-w-md mx-auto z-10">
-            <h2 class="mt-6 text-center text-3xl sm:text-4xl font-serif font-bold text-[#d4af37] tracking-wider">HARVISHA</h2>
-            <p class="mt-2 text-center text-xs sm:text-sm text-gray-400 uppercase tracking-[0.2em]">Studio Portal</p>
+            <h2 class="mt-6 text-center text-3xl sm:text-4xl font-serif font-bold text-[#d4af37] tracking-wider">HARVISHA PICTURES</h2>
+            <p class="mt-2 text-center text-xs sm:text-sm text-gray-400 uppercase tracking-[0.2em]">Album Selection Portal</p>
         </div>
 
         <div class="relative mt-8 w-full max-w-md mx-auto z-10">
@@ -99,7 +134,11 @@
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- MAIN APP WRAPPER -->
+    <!-- ========================================== -->
     <div id="app-wrapper" class="hide min-h-screen flex flex-col">
+        <!-- Header -->
         <header class="bg-[#141414] border-b border-[#2a2a2a] sticky top-0 z-50">
             <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -120,7 +159,9 @@
 
         <main class="w-full flex-grow flex flex-col">
             
+            <!-- CLIENT VIEW (LIGHTROOM STYLE) -->
             <div id="client-view" class="hide flex-grow flex flex-col bg-[#0a0a0a]">
+                <!-- Client Header -->
                 <div class="px-4 py-4 sm:px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#141414] border-b border-[#222]">
                     <div class="w-full md:w-auto">
                         <h1 id="client-header-title" class="text-xl sm:text-2xl font-serif text-white truncate">Album Title</h1>
@@ -142,30 +183,54 @@
                     <span class="font-medium tracking-wide">Selections confirmed and sent to studio.</span>
                 </div>
 
+                <!-- Lightroom Main Preview Area -->
                 <div class="flex-grow relative flex items-center justify-center p-2 sm:p-4 bg-[#050505] overflow-hidden" id="main-preview-container">
                     <img id="main-preview-image" src="" class="max-h-[60vh] md:max-h-full max-w-full object-contain shadow-2xl transition-all duration-300" alt="Preview">
                     <div id="main-selection-indicator" class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-black/50 backdrop-blur-md p-2 sm:p-3 rounded-full cursor-pointer hover:bg-black/80 transition-colors z-10" onclick="window.toggleCurrentSelection()"></div>
-                    <div id="client-empty-state" class="hide absolute inset-0 flex items-center justify-center text-gray-500 font-serif text-lg sm:text-xl p-4 text-center">No proofs uploaded yet.</div>
+                    <div id="client-empty-state" class="hide absolute inset-0 flex items-center justify-center text-gray-500 font-serif text-lg sm:text-xl p-4 text-center">No images uploaded yet.</div>
                 </div>
 
+                <!-- Filmstrip -->
                 <div class="h-28 sm:h-32 bg-[#141414] border-t border-[#222] p-2 sm:p-4 overflow-x-auto whitespace-nowrap flex gap-2 items-center pb-safe" id="filmstrip-container" style="-webkit-overflow-scrolling: touch;"></div>
             </div>
 
+            <!-- ADMIN VIEW -->
             <div id="admin-view" class="hide max-w-6xl mx-auto w-full p-4 sm:p-6 space-y-6 sm:space-y-8">
                 
                 <div class="flex items-center justify-between border-b border-[#333] pb-4 sm:pb-6">
                     <div>
                         <h1 class="text-2xl sm:text-3xl font-serif text-white">Studio Dashboard</h1>
-                        <p class="text-gray-400 text-sm sm:text-base mt-1">Manage portal access and uploads.</p>
+                        <p class="text-gray-400 text-sm sm:text-base mt-1">Manage portal access and image uploads.</p>
                     </div>
                 </div>
 
-                <div class="flex gap-6 border-b border-[#333] mb-6 overflow-x-auto">
-                    <button onclick="window.switchAdminTab('tab-view-clients')" id="tab-btn-clients" class="pb-3 border-b-2 border-[#d4af37] text-[#d4af37] font-medium transition-colors whitespace-nowrap">Manage Clients</button>
-                    <button onclick="window.switchAdminTab('tab-view-admins')" id="tab-btn-admins" class="hide pb-3 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-medium transition-colors whitespace-nowrap">Manage Staff (Head Admin)</button>
+                <!-- Admin Navigation Tabs & Storage Indicator -->
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+                    <div class="flex gap-6 border-b border-[#333] overflow-x-auto w-full lg:w-auto">
+                        <button onclick="window.switchAdminTab('tab-view-clients')" id="tab-btn-clients" class="pb-3 border-b-2 border-[#d4af37] text-[#d4af37] font-medium transition-colors whitespace-nowrap">Manage Clients</button>
+                        <button onclick="window.switchAdminTab('tab-view-admins')" id="tab-btn-admins" class="hide pb-3 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-medium transition-colors whitespace-nowrap">Manage Staff (Head Admin)</button>
+                    </div>
+                    
+                    <!-- Dynamic Cloud Storage Tracker -->
+                    <div class="flex items-center gap-3 w-full lg:w-auto bg-[#141414] p-3 rounded-lg border border-[#2a2a2a] shadow-inner">
+                        <div class="p-2 bg-[#d4af37]/10 rounded-full text-[#d4af37]">
+                            <i data-lucide="cloud" class="w-5 h-5"></i>
+                        </div>
+                        <div class="w-full sm:w-56">
+                            <div class="flex justify-between text-[10px] text-gray-400 mb-1.5 uppercase tracking-wider font-semibold">
+                                <span>Cloud Storage</span>
+                                <span id="storage-text">Calculating...</span>
+                            </div>
+                            <div class="w-full bg-[#0a0a0a] rounded-full h-1.5 border border-[#333]">
+                                <div id="storage-bar" class="bg-[#d4af37] h-1.5 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(212,175,55,0.5)]" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- CLIENTS TAB -->
                 <div id="tab-view-clients" class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Left Column: Create Client -->
                     <div class="bg-[#141414] border border-[#2a2a2a] rounded-xl p-5 sm:p-6 h-fit order-2 lg:order-1">
                         <h3 class="text-lg font-serif text-white mb-4 border-b border-[#333] pb-2">Create New Client</h3>
                         <form id="create-client-form" onsubmit="window.handleCreateClient(event)" class="space-y-4">
@@ -193,12 +258,15 @@
                         </form>
                     </div>
 
+                    <!-- Right Column: Client List -->
                     <div class="lg:col-span-2 space-y-4 order-1 lg:order-2" id="admin-clients-list">
                         <div class="text-gray-500 italic text-sm p-4 text-center">Loading database...</div>
                     </div>
                 </div>
 
+                <!-- ADMINS TAB (Head Admin Only) -->
                 <div id="tab-view-admins" class="hide grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Left Column: Create Admin -->
                     <div class="bg-[#141414] border border-[#2a2a2a] rounded-xl p-5 sm:p-6 h-fit order-2 lg:order-1">
                         <h3 class="text-lg font-serif text-white mb-4 border-b border-[#333] pb-2">Create Staff Account</h3>
                         <form id="create-admin-form" onsubmit="window.handleCreateAdmin(event)" class="space-y-4">
@@ -223,21 +291,23 @@
                         </form>
                     </div>
 
+                    <!-- Right Column: Admin List -->
                     <div class="lg:col-span-2 space-y-4 order-1 lg:order-2" id="admin-staff-list">
-                        </div>
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
 
             </div>
         </main>
     </div>
 
+    <!-- Application Logic & Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject, listAll } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        // Your exact Firebase keys
         const firebaseConfig = {
             apiKey: "AIzaSyBFVTqHRMoD-QF_OLTxDCwfUqgarA3FvV4",
             authDomain: "harvisha-portal.firebaseapp.com",
@@ -301,20 +371,17 @@
             spinner.classList.remove('hide');
 
             try {
-                // 1. Check Hardcoded Master Key
                 if (user === 'headadmin' && pass === 'headadmin123') {
                     currentUser = { role: 'admin', adminRole: 'head', id: 'headadmin' };
                     loadApp(); return;
                 }
 
-                // 2. Check Database Admins
                 let docSnap = await getDoc(doc(db, 'admins', user));
                 if (docSnap.exists() && docSnap.data().password === pass) {
                     currentUser = { role: 'admin', adminRole: docSnap.data().role, id: user };
                     loadApp(); return;
                 }
 
-                // 3. Check Clients
                 docSnap = await getDoc(doc(db, 'clients', user));
                 if (docSnap.exists() && docSnap.data().password === pass) {
                     currentUser = { role: 'client', id: user, data: docSnap.data() };
@@ -385,7 +452,7 @@
             document.getElementById('app-wrapper').classList.add('hide');
         };
 
-        // --- CLIENT GALLERY LOGIC (Unchanged) ---
+        // --- CLIENT GALLERY LOGIC ---
         function renderLightroomGallery() {
             if (clientImages.length === 0) {
                 document.getElementById('main-preview-image').classList.add('hide');
@@ -496,25 +563,16 @@
             document.getElementById(btnId).className = "pb-3 border-b-2 border-[#d4af37] text-[#d4af37] font-medium transition-colors whitespace-nowrap";
         };
 
-        // --- CREDENTIALS EDITING SYSTEM ---
         window.openEditModal = (type, currentId, currentPassword) => {
             document.getElementById('edit-target-old-id').value = currentId;
             document.getElementById('edit-target-type').value = type;
             const userField = document.getElementById('edit-username');
             const passField = document.getElementById('edit-password');
             const warning = document.getElementById('edit-username-warning');
-            
             userField.value = currentId;
             passField.value = currentPassword;
-
-            if (currentUser.adminRole === 'head') {
-                userField.disabled = false;
-                warning.classList.add('hide');
-            } else {
-                userField.disabled = true; // Normal admins cannot change IDs
-                warning.classList.remove('hide');
-            }
-
+            if (currentUser.adminRole === 'head') { userField.disabled = false; warning.classList.add('hide'); } 
+            else { userField.disabled = true; warning.classList.remove('hide'); }
             document.getElementById('edit-modal').classList.remove('hide');
         };
 
@@ -524,7 +582,6 @@
             e.preventDefault();
             const btn = document.getElementById('edit-submit-btn');
             btn.innerText = "Saving...";
-            
             const oldId = document.getElementById('edit-target-old-id').value;
             const type = document.getElementById('edit-target-type').value;
             const newId = document.getElementById('edit-username').value.trim();
@@ -532,53 +589,47 @@
             
             try {
                 const collectionName = type === 'client' ? 'clients' : 'admins';
-                
                 if (oldId === newId) {
-                    // Just update password
                     await updateDoc(doc(db, collectionName, oldId), { password: newPass });
                 } else {
-                    // Changing Username (requires Head Admin)
                     if (currentUser.adminRole !== 'head') throw new Error("Unauthorized to change ID.");
-                    
-                    // 1. Verify new ID doesn't exist
                     const checkSnap = await getDoc(doc(db, collectionName, newId));
-                    if(checkSnap.exists()) {
-                        alert("That Access ID is already taken!");
-                        return;
-                    }
-                    
-                    // 2. Fetch old data, create new doc, delete old doc
+                    if(checkSnap.exists()) { alert("That Access ID is already taken!"); return; }
                     const oldSnap = await getDoc(doc(db, collectionName, oldId));
                     let data = oldSnap.data();
-                    data.username = newId;
-                    data.password = newPass;
-                    
+                    data.username = newId; data.password = newPass;
                     await setDoc(doc(db, collectionName, newId), data);
                     await deleteDoc(doc(db, collectionName, oldId));
-                    
-                    // Note for prototype: Storage files are tied to the old username folder path.
-                    // For this version, they will still load perfectly because the absolute URLs are saved in the array!
                 }
                 window.closeEditModal();
-            } catch (err) {
-                console.error(err);
-                alert("Failed to save credentials.");
-            } finally {
-                btn.innerText = "Save Changes";
-            }
+            } catch (err) { alert("Failed to save credentials."); } finally { btn.innerText = "Save Changes"; }
         };
 
-        // --- MANAGE CLIENTS LOGIC ---
+        // --- MANAGE CLIENTS & STORAGE CALCULATION ---
         function loadAdminClients() {
             unsubscribeClients = onSnapshot(collection(db, "clients"), (snapshot) => {
                 const container = document.getElementById('admin-clients-list');
                 container.innerHTML = '';
+                
+                let totalStorageBytes = 0; // Track cloud usage
+
                 if (snapshot.empty) {
                     container.innerHTML = `<div class="bg-[#141414] border border-[#2a2a2a] p-8 rounded-xl text-center text-gray-500 font-serif text-sm sm:text-base">No clients found.</div>`;
+                    updateStorageUI(0);
                     return;
                 }
+
                 snapshot.forEach((docSnap) => {
                     const client = docSnap.data();
+                    
+                    // Accumulate sizes for storage tracker
+                    if (client.images) {
+                        client.images.forEach(img => {
+                            if (img.size) totalStorageBytes += img.size;
+                            else totalStorageBytes += 500 * 1024; // Estimate old images at 500KB
+                        });
+                    }
+
                     const card = document.createElement('div');
                     card.className = "bg-[#141414] border border-[#2a2a2a] rounded-xl overflow-hidden";
                     
@@ -610,7 +661,7 @@
                             <div class="w-full sm:w-auto flex flex-col gap-2 shrink-0 pt-2 sm:pt-0 border-t border-[#222] sm:border-0 mt-2 sm:mt-0">
                                 <input type="file" id="upload-${client.username}" multiple accept="image/*" class="hide" onchange="window.uploadPhotos(event, '${client.username}')">
                                 <label for="upload-${client.username}" class="w-full sm:w-auto cursor-pointer border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black transition-colors px-4 py-3 sm:py-2 rounded text-sm text-center font-medium block">
-                                    <i data-lucide="upload" class="w-4 h-4 inline-block mr-1"></i> Upload Proofs
+                                    <i data-lucide="upload" class="w-4 h-4 inline-block mr-1"></i> Upload Images
                                 </label>
                                 <div class="text-[10px] sm:text-xs text-center text-gray-500">${client.images.length} files stored</div>
                             </div>
@@ -619,7 +670,28 @@
                     container.appendChild(card);
                 });
                 lucide.createIcons();
+                updateStorageUI(totalStorageBytes);
             });
+        }
+
+        function updateStorageUI(totalBytes) {
+            const totalGB = 5;
+            const totalBytesQuota = totalGB * 1024 * 1024 * 1024;
+            let usedMB = (totalBytes / (1024 * 1024)).toFixed(1);
+            let percentUsed = Math.min((totalBytes / totalBytesQuota) * 100, 100);
+
+            // Format for larger numbers
+            let displayStorage = `${usedMB} MB`;
+            if(usedMB > 1024) displayStorage = `${(usedMB/1024).toFixed(2)} GB`;
+
+            document.getElementById('storage-text').innerText = `${displayStorage} / ${totalGB} GB`;
+            document.getElementById('storage-bar').style.width = `${percentUsed}%`;
+            
+            // Turn bar red if nearing capacity (over 90%)
+            if(percentUsed > 90) {
+                document.getElementById('storage-bar').classList.remove('bg-[#d4af37]');
+                document.getElementById('storage-bar').classList.add('bg-red-500');
+            }
         }
 
         window.handleCreateClient = async (e) => {
@@ -631,14 +703,12 @@
                     window.showModal("Error", "Access ID already in use.", "OK", ()=>{}); return;
                 }
                 await setDoc(doc(db, 'clients', username), {
-                    username: username,
-                    name: document.getElementById('new-client-name').value,
-                    albumName: document.getElementById('new-client-album').value,
-                    password: document.getElementById('new-client-password').value,
+                    username: username, name: document.getElementById('new-client-name').value,
+                    albumName: document.getElementById('new-client-album').value, password: document.getElementById('new-client-password').value,
                     images: [], selectedImages: [], isSubmitted: false
                 });
                 document.getElementById('create-client-form').reset();
-            } catch (error) { window.showModal("Error", "Could not create client.", "OK", ()=>{}); }
+            } catch (error) { window.showModal("Error", "Firebase Error: " + error.message, "OK", ()=>{}); }
         };
 
         window.deleteClient = (username) => {
@@ -654,27 +724,102 @@
             });
         };
 
+        // --- ADVANCED UPLOAD LOGIC ---
         window.uploadPhotos = async (event, username) => {
-            const files = event.target.files;
+            const files = Array.from(event.target.files);
             if (files.length === 0) return;
-            window.showModal("Uploading", `Uploading ${files.length} images... do not close this window.`, "Uploading...", ()=>{});
+
+            // UI Elements
+            const modal = document.getElementById('upload-modal');
+            const progressBar = document.getElementById('upload-progress-bar');
+            const statsAmount = document.getElementById('upload-stats-amount');
+            const statsPercent = document.getElementById('upload-stats-percent');
+            const statsSpeed = document.getElementById('upload-stats-speed');
+            const statsTime = document.getElementById('upload-stats-time');
+
+            // Reset UI
+            modal.classList.remove('hide');
+            progressBar.style.width = '0%';
+            statsAmount.innerText = `0 MB / 0 MB`;
+            statsPercent.innerText = `0%`;
+            statsSpeed.innerText = `Calculating...`;
+            statsTime.innerText = `Calculating...`;
+
+            // Tracking Data
+            const totalBytes = files.reduce((acc, file) => acc + file.size, 0);
+            let transferredBytesArray = new Array(files.length).fill(0);
+            let lastBytesTransferred = 0;
+            let lastTime = Date.now();
+
             try {
                 const docRef = doc(db, 'clients', username);
                 const docSnap = await getDoc(docRef);
                 const currentImages = docSnap.data().images || [];
-                const uploadPromises = Array.from(files).map(async (file) => {
-                    const storageRef = ref(storage, `clients/${username}/${file.name}`);
-                    await uploadBytesResumable(storageRef, file);
-                    const url = await getDownloadURL(storageRef);
-                    return { id: Date.now() + Math.random().toString(36).substr(2, 9), filename: file.name, url: url };
+
+                const uploadPromises = files.map((file, index) => {
+                    return new Promise((resolve, reject) => {
+                        const storageRef = ref(storage, `clients/${username}/${file.name}`);
+                        const uploadTask = uploadBytesResumable(storageRef, file);
+
+                        uploadTask.on('state_changed', 
+                            (snapshot) => {
+                                transferredBytesArray[index] = snapshot.bytesTransferred;
+                                const currentTotalTransferred = transferredBytesArray.reduce((a, b) => a + b, 0);
+                                const progress = (currentTotalTransferred / totalBytes) * 100;
+                                
+                                const now = Date.now();
+                                const timeDiff = (now - lastTime) / 1000; // seconds
+                                
+                                // Update speed & time every half second to prevent UI flickering
+                                if (timeDiff >= 0.5 || currentTotalTransferred === totalBytes) {
+                                    const bytesDiff = currentTotalTransferred - lastBytesTransferred;
+                                    const speedBps = bytesDiff / timeDiff; 
+                                    
+                                    const speedMbps = (speedBps / (1024 * 1024)).toFixed(2);
+                                    statsSpeed.innerText = `${speedMbps} MB/s`;
+
+                                    if (speedBps > 0) {
+                                        const remainingBytes = totalBytes - currentTotalTransferred;
+                                        const remainingSeconds = Math.round(remainingBytes / speedBps);
+                                        statsTime.innerText = remainingSeconds > 60 
+                                            ? `${Math.floor(remainingSeconds/60)}m ${remainingSeconds%60}s` 
+                                            : `${remainingSeconds}s`;
+                                    }
+
+                                    lastBytesTransferred = currentTotalTransferred;
+                                    lastTime = now;
+                                }
+
+                                progressBar.style.width = `${progress}%`;
+                                statsPercent.innerText = `${Math.round(progress)}%`;
+                                statsAmount.innerText = `${(currentTotalTransferred / (1024*1024)).toFixed(2)} MB / ${(totalBytes / (1024*1024)).toFixed(2)} MB`;
+                            },
+                            (error) => { reject(error); },
+                            async () => {
+                                const url = await getDownloadURL(uploadTask.snapshot.ref);
+                                resolve({
+                                    id: Date.now() + Math.random().toString(36).substr(2, 9),
+                                    filename: file.name,
+                                    url: url,
+                                    size: file.size // Store size for our new Storage Tracker
+                                });
+                            }
+                        );
+                    });
                 });
+
                 const newImages = await Promise.all(uploadPromises);
                 await updateDoc(docRef, { images: [...currentImages, ...newImages] });
-                window.closeModal();
-            } catch (error) { window.closeModal(); window.showModal("Error", "Upload failed.", "OK", ()=>{}); }
+
+                modal.classList.add('hide');
+                event.target.value = ''; // clear input
+            } catch (error) {
+                modal.classList.add('hide');
+                window.showModal("Error", "Upload failed: " + error.message, "OK", ()=>{});
+            }
         };
 
-        // --- MANAGE ADMINS LOGIC (Head Admin Only) ---
+        // --- MANAGE ADMINS LOGIC ---
         function loadAdminStaff() {
             unsubscribeAdmins = onSnapshot(collection(db, "admins"), (snapshot) => {
                 const container = document.getElementById('admin-staff-list');
@@ -683,7 +828,6 @@
                     const admin = docSnap.data();
                     const card = document.createElement('div');
                     card.className = "bg-[#141414] border border-[#2a2a2a] rounded-xl overflow-hidden p-5 flex justify-between items-center";
-                    
                     card.innerHTML = `
                         <div>
                             <h4 class="text-lg font-serif text-white">${admin.username}</h4>
@@ -710,22 +854,16 @@
             const username = document.getElementById('new-admin-username').value.trim();
             try {
                 const docSnap = await getDoc(doc(db, 'admins', username));
-                if (docSnap.exists() || username === 'headadmin') {
-                    window.showModal("Error", "Admin ID already exists.", "OK", ()=>{}); return;
-                }
+                if (docSnap.exists() || username === 'headadmin') { window.showModal("Error", "Admin ID already exists.", "OK", ()=>{}); return; }
                 await setDoc(doc(db, 'admins', username), {
-                    username: username,
-                    password: document.getElementById('new-admin-password').value,
-                    role: document.getElementById('new-admin-role').value
+                    username: username, password: document.getElementById('new-admin-password').value, role: document.getElementById('new-admin-role').value
                 });
                 document.getElementById('create-admin-form').reset();
-            } catch (error) { window.showModal("Error", "Could not create Admin.", "OK", ()=>{}); }
+            } catch (error) { window.showModal("Error", "Firebase Error: " + error.message, "OK", ()=>{}); }
         };
 
         window.deleteAdmin = (username) => {
-            window.showModal("Delete Admin", "Are you sure you want to remove this staff member?", "Delete", async () => {
-                await deleteDoc(doc(db, 'admins', username));
-            });
+            window.showModal("Delete Admin", "Are you sure you want to remove this staff member?", "Delete", async () => { await deleteDoc(doc(db, 'admins', username)); });
         };
     </script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamal & Bindu Wedding Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,7 +12,6 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Poppins', sans-serif;
             background: #1a1a1a;
             min-height: 100vh;
             display: flex;
@@ -22,18 +21,18 @@
             position: relative;
         }
 
-        /* Background Styling */
+        /* Dark background behind the envelope */
         .bg-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #2c161c 0%, #111 100%);
+            background: linear-gradient(135deg, #2b1b17 0%, #111 100%);
             z-index: 1;
         }
 
-        /* Envelope Wrapper */
+        /* --- Envelope Styling --- */
         .envelope-container {
             position: relative;
             z-index: 10;
@@ -49,7 +48,7 @@
             position: relative;
             width: 320px;
             height: 220px;
-            background: #b8860b;
+            background: #c59b6d; /* Soft Gold/Brown */
             border-radius: 0 0 10px 10px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
@@ -62,7 +61,7 @@
             height: 0;
             border-left: 160px solid transparent;
             border-right: 160px solid transparent;
-            border-top: 120px solid #daa520;
+            border-top: 120px solid #e2b989;
             transform-origin: top;
             transition: transform 0.6s ease 0.3s;
             z-index: 3;
@@ -74,9 +73,9 @@
             left: 0;
             width: 0;
             height: 0;
-            border-left: 160px solid #cfb53b;
-            border-right: 160px solid #cfb53b;
-            border-bottom: 120px solid #d4af37;
+            border-left: 160px solid #d4a373;
+            border-right: 160px solid #d4a373;
+            border-bottom: 120px solid #c59b6d;
             border-radius: 0 0 10px 10px;
             z-index: 2;
         }
@@ -88,28 +87,25 @@
             transform: translate(-50%, -50%);
             z-index: 4;
             color: #fff;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
             text-align: center;
             width: 100%;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
             pointer-events: none;
         }
-
         .envelope-text span {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            margin-top: 5px;
+            margin-top: 8px;
             text-transform: uppercase;
         }
 
-        /* Open State classes */
         .envelope-container.open .envelope-flap {
             transform: rotateX(180deg);
             z-index: 1;
         }
-
         .envelope-container.open {
             opacity: 0;
             pointer-events: none;
@@ -117,110 +113,145 @@
             transition: all 0.6s ease;
         }
 
-        /* Invitation Card Styling */
+        /* --- Traditional Invitation Card Styling --- */
         .invitation-card {
             position: absolute;
             z-index: 5;
-            background: #ffffff;
+            background: radial-gradient(circle at center, #fff5eb 0%, #f9e4d4 100%); /* Soft peach background */
             width: 90%;
-            max-width: 500px;
-            padding: 35px 25px;
-            border-radius: 15px;
+            max-width: 450px;
+            height: 85vh; /* Taller card to mimic portrait reference */
+            max-height: 800px;
+            padding: 40px 25px;
+            border-radius: 12px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             text-align: center;
-            border: 2px solid #d4af37;
+            border: 2px solid #e0c097;
             opacity: 0;
-            transform: scale(0.5);
+            transform: scale(0.5) translateY(50px);
             pointer-events: none;
             transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow-y: auto;
+            color: #5c4033;
+        }
+
+        /* Inner decorative border */
+        .invitation-card::before {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            pointer-events: none;
         }
 
         .invitation-card.show {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             pointer-events: auto;
             z-index: 20;
         }
 
-        .header-text {
-            font-size: 0.9rem;
-            letter-spacing: 3px;
+        .ganesha-icon {
+            width: 60px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .small-caps {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            color: #7a6353;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #7a1f3d; /* Traditional Maroon/Wine Red */
+            margin: 20px 0;
+            line-height: 1.1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background-color: #d4af37;
+            margin: 20px auto;
+            position: relative;
+        }
+        .divider::after {
+            content: '♦';
+            position: absolute;
+            top: -10px;
+            left: 20px;
             color: #d4af37;
-            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .event-details {
+            font-family: 'Cinzel', serif;
+            margin-top: 15px;
+        }
+
+        .event-type {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: #7a6353;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .event-date {
+            font-size: 1.3rem;
+            color: #7a1f3d;
+            margin-bottom: 20px;
             font-weight: 500;
         }
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: #2c2c2c;
+
+        .venue-title {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-top: 15px;
             margin-bottom: 5px;
+            color: #7a6353;
+            text-transform: uppercase;
         }
-        .ampersand {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #d4af37;
-            font-weight: normal;
+
+        .venue-address {
+            font-size: 0.95rem;
+            color: #5c4033;
+            font-weight: 500;
+            line-height: 1.4;
         }
-        .invite-sub {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 25px;
+
+        /* --- Scroll down hint --- */
+        .scroll-hint {
+            margin-top: 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            color: #a88d78;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
         }
-        .events-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .event-box {
-            background: #fdfaf6;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #d4af37;
-            text-align: left;
-        }
-        .event-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: #2c2c2c;
-            margin-bottom: 3px;
-        }
-        .event-date {
-            font-size: 1rem;
-            color: #d4af37;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .event-venue {
-            font-size: 0.85rem;
-            color: #555;
-        }
-        .footer-note {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            color: #444;
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
         }
 
         @media(max-width: 400px) {
-            .envelope {
-                width: 280px;
-                height: 190px;
-            }
-            .envelope-flap {
-                border-left: 140px solid transparent;
-                border-right: 140px solid transparent;
-                border-top: 100px solid #daa520;
-            }
-            .envelope-pocket {
-                border-left: 140px solid #cfb53b;
-                border-right: 140px solid #cfb53b;
-                border-bottom: 100px solid #d4af37;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+            .envelope { width: 280px; height: 190px; }
+            .envelope-flap { border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid #e2b989; }
+            .envelope-pocket { border-left: 140px solid #d4a373; border-right: 140px solid #d4a373; border-bottom: 100px solid #c59b6d; }
+            .names { font-size: 3rem; }
+            .invitation-card { height: 90vh; padding: 30px 15px; }
         }
     </style>
 </head>
@@ -238,56 +269,12 @@
             <div class="envelope-pocket"></div>
             <div class="envelope-text">
                 Kamal & Bindu
-                <span>Tap to Open Invitation</span>
+                <span>Tap to Open</span>
             </div>
         </div>
     </div>
 
     <div class="invitation-card" id="invitationCard">
-        <div class="header-text">You Are Cordially Invited</div>
         
-        <h1>Kamal <span class="ampersand">&</span> Bindu</h1>
-        <div class="invite-sub">Aate hain khushiyon ke yeh pal, aapki maujudagi ke bina adhe hain.</div>
-
-        <div class="events-container">
-            <div class="event-box">
-                <div class="event-title">Wedding Ceremony</div>
-                <div class="event-date">10 November</div>
-                <div class="event-venue">Vedic Village Spa Resort, New Town, Kolkata</div>
-            </div>
-
-            <div class="event-box">
-                <div class="event-title">Reception</div>
-                <div class="event-date">11 November</div>
-                <div class="event-venue">Vedic Village Spa Resort, New Town, Kolkata</div>
-            </div>
-        </div>
-
-        <div class="footer-note">
-            We look forward to celebrating with you!
-        </div>
-    </div>
-
-    <script>
-        function openInvitation() {
-            const envelope = document.getElementById('envelopeContainer');
-            const card = document.getElementById('invitationCard');
-            const music = document.getElementById('bgMusic');
-
-            // Play background music (Browser autoplay policies handle user tap automatically here)
-            music.play().catch(error => {
-                console.log("Audio play prevented: ", error);
-            });
-
-            // Trigger envelope opening animation
-            envelope.classList.add('open');
-
-            // Show invitation card smoothly after envelope opens
-            setTimeout(() => {
-                card.classList.add('show');
-            }, 500);
-        }
-    </script>
-
-</body>
-</html>
+        <svg class="ganesha-icon" viewBox="0 0 100 100" fill="#d4af37" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 10 C30 10 20 25 20 40 C20 50 25 55 30 60 C25 65 20 75 25 85 C30 95 45 90 50 85 C55 90 70 95 75 85 C80 75 75 65 70 60 C75 55 80 50 80 40 C80 25 7

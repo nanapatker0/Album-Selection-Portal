@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asoke Majumdar & Associates - LEXRESOURCE</title>
     
-    <!-- Favicon -->
+    <!-- Favicon Add Kiya Gaya Hai -->
     <link rel="icon" type="image/png" href="images/favicon.png"> 
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,9 +47,10 @@
         }
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 80px; 
+            scroll-padding-top: 80px; /* Fix for sticky header overlapping sections */
         }
         
+        /* Stop body scroll when disclaimer is open */
         body.modal-open {
             overflow: hidden;
         }
@@ -61,17 +62,6 @@
         .hide-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
-        }
-
-        /* NEW: Vertical Snapping (Hook Effect) for Mobile */
-        @media (max-width: 768px) {
-            html {
-                scroll-snap-type: y proximity;
-            }
-            #practice-areas, #why-choose-us {
-                scroll-snap-align: start;
-                scroll-margin-top: 75px; /* Adjust based on mobile header height */
-            }
         }
 
         .disclaimer-overlay {
@@ -173,6 +163,20 @@
                 padding: 12px 18px;
                 letter-spacing: 0.08em;
             }
+            header#home h2 {
+                font-size: clamp(2.6rem, 9vw, 3.5rem) !important;
+                line-height: 1.08;
+            }
+            header#home p.text-gold-500 {
+                font-size: 0.62rem !important;
+                letter-spacing: 0.15em !important;
+            }
+            header#home p.text-gray-400 {
+                font-size: 0.76rem !important;
+            }
+            section h2 {
+                font-size: clamp(2rem, 7vw, 2.8rem) !important;
+            }
             .stats-number {
                 font-size: clamp(2.1rem, 7vw, 3rem) !important;
             }
@@ -200,6 +204,7 @@
             animation: countUp 0.8s ease forwards;
         }
 
+        /* Back to top button styling */
         #backToTop {
             opacity: 0;
             visibility: hidden;
@@ -290,8 +295,8 @@
         </div>
     </nav>
 
-    <!-- NEW: Highly Optimized Mobile Hero Section -->
-    <header id="home" class="bg-stripes min-h-[85vh] md:min-h-[70vh] flex flex-col items-center justify-center relative text-center px-4 py-16 md:py-32 snap-start">
+    <!-- Optimized Mobile Hero Section -->
+    <header id="home" class="bg-stripes min-h-[85vh] md:min-h-[70vh] flex flex-col items-center justify-center relative text-center px-4 py-16 md:py-32">
         <div class="max-w-4xl mx-auto relative z-10 w-full" data-aos="fade-up" data-aos-duration="1000">
             <p class="text-gold-500 text-[0.65rem] md:text-xs font-bold tracking-[0.3em] mb-4 md:mb-6 uppercase">Advocates · Legal Consultants</p>
             
@@ -342,7 +347,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 md:py-24 bg-white overflow-hidden snap-start scroll-mt-16">
+    <section id="about" class="py-16 md:py-24 bg-white overflow-hidden">
         <div class="container mx-auto max-w-6xl px-4">
             <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
                 <div class="md:w-1/2" data-aos="fade-right">
@@ -390,7 +395,7 @@
     </section>
 
     <!-- Practice Areas -->
-    <section id="practice-areas" class="py-16 md:py-24 bg-cream overflow-hidden snap-start">
+    <section id="practice-areas" class="py-16 md:py-24 bg-cream overflow-hidden">
         <div class="container mx-auto max-w-6xl px-4">
             <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">PRACTICE AREAS -LEXRESOURCE</p>
@@ -404,6 +409,7 @@
                 </div>
             </div>
 
+            <!-- Horizontal Swipe Container -->
             <div class="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
                 
                 <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="0">
@@ -545,8 +551,8 @@
         </style>
     </section>
 
-    <!-- NEW: Snap hook for Why Choose Us -->
-    <section id="why-choose-us" class="bg-navy-900 py-16 md:py-24 text-white snap-start">
+    <!-- Why Choose Us -->
+    <section id="why-choose-us" class="bg-navy-900 py-16 md:py-24 text-white">
         <div class="container mx-auto max-w-6xl px-4">
             <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Why Lexresource</p>
@@ -581,7 +587,7 @@
     </section>
 
     <!-- Our Counsel -->
-    <section id="team" class="py-16 md:py-24 bg-white snap-start">
+    <section id="team" class="py-16 md:py-24 bg-white">
         <div class="container mx-auto max-w-5xl px-4">
             <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Our Team</p>
@@ -638,7 +644,7 @@
     </section>
 
     <!-- Insights -->
-    <section id="insights" class="py-16 md:py-24 bg-cream border-t border-gray-200 snap-start">
+    <section id="insights" class="py-16 md:py-24 bg-cream border-t border-gray-200">
         <div class="container mx-auto max-w-6xl px-4">
             <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Knowledge</p>
@@ -697,7 +703,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-16 md:py-24 bg-white text-center snap-start">
+    <section class="py-16 md:py-24 bg-white text-center">
         <div class="container mx-auto max-w-4xl px-4" data-aos="zoom-in">
             <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Client Words</p>
             <h2 class="text-4xl font-serif text-navy-900 mb-6">What Our Clients Say</h2>
@@ -751,7 +757,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-24 relative overflow-hidden snap-start">
+    <section id="contact" class="py-16 md:py-24 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-[#4a1525] via-[#2a111a] to-[#0a1128] z-0"></div>
         <div class="container mx-auto max-w-5xl px-4 relative z-10 text-center">
             <div data-aos="fade-up">
@@ -976,7 +982,7 @@
             showSlide(currentIndex);
         }
 
-        // Disclaimer Overlay Logic (With localStorage to remember user's choice)
+        // Disclaimer Overlay Logic
         document.addEventListener("DOMContentLoaded", function () {
             const overlay = document.getElementById('disclaimerOverlay');
             const acceptBtn = document.getElementById('acceptDisclaimer');
@@ -1032,6 +1038,40 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // NEW: Magnet/Hook Effect for Mobile (From Practice Areas to Why Choose Us)
+        let lastScrollY = window.scrollY;
+        let isSnapping = false;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const isScrollingDown = currentScrollY > lastScrollY;
+            lastScrollY = currentScrollY;
+
+            // Only trigger on mobile, when scrolling down, and not already snapping
+            if (window.innerWidth <= 768 && isScrollingDown && !isSnapping) {
+                const practiceSection = document.getElementById('practice-areas');
+                const whyChooseSection = document.getElementById('why-choose-us');
+                
+                if (practiceSection && whyChooseSection) {
+                    const practiceRect = practiceSection.getBoundingClientRect();
+                    
+                    // Hook condition: When the bottom of the practice section enters the top 50% of the screen
+                    if (practiceRect.bottom > 50 && practiceRect.bottom < window.innerHeight * 0.5) {
+                        isSnapping = true;
+                        
+                        // Calculate target position (offset by 70px for the sticky header)
+                        const targetY = whyChooseSection.getBoundingClientRect().top + window.scrollY - 70;
+                        
+                        // Glide smoothly
+                        window.scrollTo({ top: targetY, behavior: 'smooth' });
+                        
+                        // Unlock snapping after animation completes
+                        setTimeout(() => { isSnapping = false; }, 800);
+                    }
+                }
+            }
         });
     </script>
 </body>

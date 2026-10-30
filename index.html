@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asoke Majumdar & Associates - LEXRESOURCE</title>
     
-    <!-- Favicon Add Kiya Gaya Hai -->
-    <link rel="icon" type="images/png" href="images/favicon.png"> 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png"> 
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -47,12 +47,31 @@
         }
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 90px; /* Fix for sticky header overlapping sections */
+            scroll-padding-top: 80px; 
         }
         
-        /* Stop body scroll when disclaimer is open */
         body.modal-open {
             overflow: hidden;
+        }
+
+        /* Hide Scrollbar for Mobile Carousel */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* NEW: Vertical Snapping (Hook Effect) for Mobile */
+        @media (max-width: 768px) {
+            html {
+                scroll-snap-type: y proximity;
+            }
+            #practice-areas, #why-choose-us {
+                scroll-snap-align: start;
+                scroll-margin-top: 75px; /* Adjust based on mobile header height */
+            }
         }
 
         .disclaimer-overlay {
@@ -154,20 +173,6 @@
                 padding: 12px 18px;
                 letter-spacing: 0.08em;
             }
-            header#home h2 {
-                font-size: clamp(2.6rem, 9vw, 3.5rem) !important;
-                line-height: 1.08;
-            }
-            header#home p.text-gold-500 {
-                font-size: 0.62rem !important;
-                letter-spacing: 0.15em !important;
-            }
-            header#home p.text-gray-400 {
-                font-size: 0.76rem !important;
-            }
-            section h2 {
-                font-size: clamp(2rem, 7vw, 2.8rem) !important;
-            }
             .stats-number {
                 font-size: clamp(2.1rem, 7vw, 3rem) !important;
             }
@@ -180,26 +185,21 @@
             0% { opacity: 0; transform: translateY(18px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes countUp {
             0% { opacity: 0.3; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         .stats-item {
             opacity: 0;
             animation: statsReveal 0.8s ease forwards;
         }
-
         .stats-item:nth-child(2) { animation-delay: 0.15s; }
         .stats-item:nth-child(3) { animation-delay: 0.3s; }
-
         .stats-number {
             display: inline-block;
             animation: countUp 0.8s ease forwards;
         }
 
-        /* Back to top button styling */
         #backToTop {
             opacity: 0;
             visibility: hidden;
@@ -250,7 +250,6 @@
                     </div>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wide">
                     <a href="#home" class="text-navy-900 hover:text-gold-500 transition">HOME</a>
                     <a href="#about" class="text-gray-600 hover:text-gold-500 transition">ABOUT US</a>
@@ -264,7 +263,6 @@
                     </a>
                 </div>
 
-                <!-- Mobile Actions & Hamburger -->
                 <div class="lg:hidden flex items-center gap-4">
                     <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-10 h-10 bg-[#25D366] hover:bg-[#1ebe5b] text-white rounded-full transition shadow-sm" aria-label="WhatsApp">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.53 0 .2 5.32.2 11.86c0 2.1.55 4.15 1.58 5.96L0 24l6.38-1.67a11.84 11.84 0 0 0 5.68 1.72h.01c6.53 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.48-8.38ZM12.06 21.6h-.01a9.83 9.83 0 0 1-5-1.37l-.36-.21-3.79.99 1.01-3.7-.23-.38a9.84 9.84 0 1 1 18.33-5.22 9.84 9.84 0 0 1-9.52 9.89Zm5.4-7.42c-.3-.15-1.76-.87-2.03-.97-.27-.1-.46-.15-.66.15-.2.3-.77.97-.95 1.17-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.43-1.5-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.52-.07-.15-.66-1.6-.9-2.18-.24-.58-.48-.5-.66-.5h-.57c-.2 0-.52.07-.8.38-.27.3-1.04 1.02-1.04 2.48s1.06 2.87 1.2 3.07c.15.2 2.09 3.18 5.05 4.45.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-.66.24.06.77.36.87.42.1.07.16.12.19.2.03.08.03.57-.27 1.12Z"/></svg>
@@ -276,7 +274,6 @@
             </div>
         </div>
         
-        <!-- Mobile Dropdown Menu -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg left-0 top-full">
             <div class="flex flex-col px-6 py-4 space-y-4 font-semibold text-sm">
                 <a href="#home" class="mobile-link text-navy-900 hover:text-gold-500">HOME</a>
@@ -293,28 +290,30 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header id="home" class="bg-stripes py-32 relative text-center px-4">
-        <div class="max-w-4xl mx-auto relative z-10" data-aos="fade-up" data-aos-duration="1000">
-            <p class="text-gold-500 text-xs font-bold tracking-[0.3em] mb-6 uppercase">Advocates · Legal Consultants</p>
-            <h2 class="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">Asoke Majumdar &<br>Associates</h2>
-            <p class="text-gold-500 text-sm md:text-base font-bold tracking-[0.2em] mb-8 uppercase">Lexresource — Trusted Legal Counsel Since Decades</p>
+    <!-- NEW: Highly Optimized Mobile Hero Section -->
+    <header id="home" class="bg-stripes min-h-[85vh] md:min-h-[70vh] flex flex-col items-center justify-center relative text-center px-4 py-16 md:py-32 snap-start">
+        <div class="max-w-4xl mx-auto relative z-10 w-full" data-aos="fade-up" data-aos-duration="1000">
+            <p class="text-gold-500 text-[0.65rem] md:text-xs font-bold tracking-[0.3em] mb-4 md:mb-6 uppercase">Advocates · Legal Consultants</p>
             
-            <p class="text-gray-400 max-w-2xl mx-auto text-sm leading-relaxed mb-12" data-aos="fade-up" data-aos-delay="200">
-                Asoke Majumdar &amp; Associates — LEXRESOURCE, with associate Senior Counsel Sujit Bhattacharya, brings wide experience across diverse fields of law — jointly providing legal assistance and representation in a range of civil, criminal, matrimonial, property matters, litigation, family law, arbitration, succession, legal documentation and writ proceedings before the High Court at Calcutta as well as matters before appropriate courts, tribunals and authorities in and around Kolkata.
+            <h2 class="text-4xl sm:text-5xl md:text-7xl font-serif text-white mb-4 md:mb-6 leading-tight">Asoke Majumdar &<br>Associates</h2>
+            
+            <p class="text-gold-500 text-[0.7rem] md:text-sm font-bold tracking-[0.15em] md:tracking-[0.2em] mb-6 md:mb-8 uppercase max-w-xs md:max-w-full mx-auto">Lexresource — Trusted Legal Counsel Since Decades</p>
+            
+            <p class="text-gray-400 max-w-2xl mx-auto text-xs md:text-sm leading-relaxed mb-10 md:mb-12" data-aos="fade-up" data-aos-delay="200">
+                Asoke Majumdar &amp; Associates — LEXRESOURCE, with associate Senior Counsel Sujit Bhattacharya, brings wide experience across diverse fields of law — jointly providing legal assistance and representation in a range of civil, criminal, matrimonial, property matters, litigation, family law, arbitration, succession, legal documentation and writ proceedings.
             </p>
             
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16" data-aos="fade-up" data-aos-delay="300">
-                <a href="mailto:lexresource@gmail.com" class="bg-[#25D366] hover:bg-[#1ebe5b] text-white px-8 py-3 text-sm font-bold tracking-wider transition flex items-center justify-center shadow-lg">
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8 md:mb-16 w-full px-4 sm:px-0" data-aos="fade-up" data-aos-delay="300">
+                <a href="mailto:lexresource@gmail.com" class="bg-[#25D366] hover:bg-[#1ebe5b] text-white px-8 py-3.5 md:py-3 text-xs md:text-sm font-bold tracking-wider transition flex items-center justify-center shadow-lg w-full sm:w-auto">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                     EMAIL US <span class="ml-2">→</span>
                 </a>
-                <a href="#practice-areas" class="border border-gray-500 hover:border-gold-500 text-white px-8 py-3 text-sm font-bold tracking-wider transition">
+                <a href="#practice-areas" class="border border-gray-500 hover:border-gold-500 text-white px-8 py-3.5 md:py-3 text-xs md:text-sm font-bold tracking-wider transition w-full sm:w-auto flex items-center justify-center">
                     OUR PRACTICE AREAS
                 </a>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-12 text-gray-500 text-xs font-bold tracking-[0.15em] uppercase" data-aos="fade-in" data-aos-delay="500">
+            <div class="hidden md:flex flex-row justify-center items-center space-x-12 text-gray-500 text-xs font-bold tracking-[0.15em] uppercase" data-aos="fade-in" data-aos-delay="500">
                 <span>Calcutta High Court</span>
                 <span>City Civil & Sessions Courts</span>
                 <span>Tribunals & Forums</span>
@@ -343,9 +342,9 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white overflow-hidden">
+    <section id="about" class="py-16 md:py-24 bg-white overflow-hidden snap-start scroll-mt-16">
         <div class="container mx-auto max-w-6xl px-4">
-            <div class="flex flex-col md:flex-row items-center gap-16">
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
                 <div class="md:w-1/2" data-aos="fade-right">
                     <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">About The Firm</p>
                     <h2 class="text-4xl font-serif text-navy-900 mb-6 leading-tight">A Legacy of Counsel,<br>Built on Trust</h2>
@@ -357,15 +356,15 @@
                     
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-start">
-                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-sm text-gray-700">Principled representation in every matter</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-sm text-gray-700">Practice before the Calcutta High Court & subordinate courts</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-sm text-gray-700">Clear opinions, realistic timelines, transparent fees</span>
                         </li>
                     </ul>
@@ -376,8 +375,8 @@
                 </div>
                 
                 <div class="md:w-1/2 w-full" data-aos="fade-left" data-aos-delay="100">
-                    <div class="gradient-overlay p-16 text-center text-white relative shadow-2xl">
-                        <div class="absolute inset-0 border-2 border-gold-500/20 m-4"></div>
+                    <div class="gradient-overlay p-8 md:p-16 text-center text-white relative shadow-2xl">
+                        <div class="absolute inset-0 border-2 border-gold-500/20 m-3 md:m-4"></div>
                         <div class="w-20 h-20 mx-auto rounded-full border border-gold-500 flex items-center justify-center mb-6 relative z-10">
                             <svg class="w-10 h-10 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
                         </div>
@@ -391,18 +390,23 @@
     </section>
 
     <!-- Practice Areas -->
-    <section id="practice-areas" class="py-24 bg-cream">
+    <section id="practice-areas" class="py-16 md:py-24 bg-cream overflow-hidden snap-start">
         <div class="container mx-auto max-w-6xl px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">PRACTICE AREAS -LEXRESOURCE</p>
                 <h2 class="text-4xl font-serif text-navy-900 mb-6">Our Practice Areas</h2>
                 <div class="w-10 h-1 bg-gold-500 mx-auto mb-6 rounded"></div>
                 <p class="text-gray-600 text-sm max-w-3xl mx-auto leading-relaxed">Asoke Majumdar &amp; Associates – LEXRESOURCE provides legal advice, drafting assistance and representation across various areas of law, according to the nature of each matter and instructions received.</p>
+                
+                <div class="md:hidden flex justify-center items-center text-gray-400 text-xs font-semibold uppercase tracking-widest mt-8 mb-2">
+                    <svg class="w-4 h-4 mr-2 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation: bounce-x 2s infinite;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> 
+                    Swipe to explore
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Practice Cards -->
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="0">
+            <div class="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
+                
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="0">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 21V7l7-4 7 4v14M9 11h6M9 15h6M9 19h6"/></svg>
                     </div>
@@ -415,10 +419,10 @@
                         <li>Criminal Revision &amp; Appeal Matters</li>
                         <li>Petitions for Quashing of Criminal Proceedings</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18M5 12h14M8 7h8v10H8z"/></svg>
                     </div>
@@ -429,10 +433,10 @@
                         <li>Arbitration and Conciliation Matters</li>
                         <li>Contractual dispute management</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 20V8m12 12V4M10 20v-8m4 8V8M4 20h16"/></svg>
                     </div>
@@ -444,10 +448,10 @@
                         <li>Child Custody &amp; Guardianship</li>
                         <li>Maintenance and family disputes</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 11.5l9-7 9 7v8a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-8z"/></svg>
                     </div>
@@ -458,10 +462,10 @@
                         <li>Related Documentation</li>
                         <li>Title-related matters</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="400">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19h16M7 16V9m5 7V5m5 11v-9"/></svg>
                     </div>
@@ -471,10 +475,10 @@
                         <li>Property Tax Disputes</li>
                         <li>KMC Hearing Matters</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="500">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="500">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 14l4 4L19 4M5 8h14M5 18h9"/></svg>
                     </div>
@@ -485,10 +489,10 @@
                         <li>Ejectment &amp; Eviction Suits</li>
                         <li>Partition Suits</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="600">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="600">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8M8 17h5M5 7h.01M5 12h.01M5 17h.01M19 7h.01M19 12h.01M19 17h.01"/></svg>
                     </div>
@@ -499,10 +503,10 @@
                         <li>Criminal trials and session trials</li>
                         <li>Appeals, revisions and criminal remedies</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="700">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="700">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4h10v4h3v12H4V8h3V4zm2 4h6"/></svg>
                     </div>
@@ -512,10 +516,10 @@
                         <li>Probate of Wills and Letters of Administration</li>
                         <li>Original suits and related proceedings</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="bg-white p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="800">
+                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="800">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 5h8v4h3v10H5V9h3V5zm2 0v4h4V5"/></svg>
                     </div>
@@ -527,16 +531,24 @@
                         <li>Petitions, objections &amp; written submissions</li>
                         <li>Sale deeds, gift deeds &amp; property documents</li>
                     </ul>
-                    <a href="https://wa.me/919830270624" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
+                    <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
+                
             </div>
         </div>
+        
+        <style>
+            @keyframes bounce-x {
+                0%, 100% { transform: translateX(0); }
+                50% { transform: translateX(5px); }
+            }
+        </style>
     </section>
 
-    <!-- Why Choose Us -->
-    <section class="bg-navy-900 py-24 text-white">
+    <!-- NEW: Snap hook for Why Choose Us -->
+    <section id="why-choose-us" class="bg-navy-900 py-16 md:py-24 text-white snap-start">
         <div class="container mx-auto max-w-6xl px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Why Lexresource</p>
                 <h2 class="text-4xl font-serif mb-6">Why Clients Choose Us</h2>
                 <div class="w-10 h-1 bg-gold-500 mx-auto mb-6 rounded"></div>
@@ -569,9 +581,9 @@
     </section>
 
     <!-- Our Counsel -->
-    <section id="team" class="py-24 bg-white">
+    <section id="team" class="py-16 md:py-24 bg-white snap-start">
         <div class="container mx-auto max-w-5xl px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Our Team</p>
                 <h2 class="text-4xl font-serif text-navy-900 mb-6">Our Counsel</h2>
                 <div class="w-10 h-1 bg-gold-500 mx-auto mb-6 rounded"></div>
@@ -579,18 +591,14 @@
             </div>
             
             <div class="space-y-12">
-                <!-- Profile 1 -->
                 <div class="bg-cream border border-gray-100 flex flex-col md:flex-row" data-aos="fade-up">
-                    <div class="gradient-overlay p-12 flex flex-col items-center justify-center text-center md:w-2/5 text-white">
-                        
-                        <!-- picture1.jpg added here -->
-                        <img src="images/picture1.jpg" alt="Mr. Asoke Majumdar" class="w-28 h-28 rounded-full border-2 border-gold-500 mb-4 bg-navy-900/50 object-cover shadow-lg">
-                        
+                    <div class="gradient-overlay p-8 md:p-12 flex flex-col items-center justify-center text-center md:w-2/5 text-white">
+                        <img src="images/picture1.jpg" alt="Mr. Asoke Majumdar" class="w-40 h-40 md:w-48 md:h-48 rounded-full border-[3px] border-gold-500 mb-6 bg-navy-900/50 object-cover shadow-xl">
                         <h3 class="text-xl font-serif font-bold mb-1">Mr. Asoke Majumdar</h3>
                         <p class="text-[0.6rem] tracking-[0.2em] text-gold-500 font-bold mb-6 uppercase">Founder & Principal<br>Consultant</p>
                         <p class="font-serif italic text-sm text-gray-300">"Every client deserves counsel as diligent as the cause is dear."</p>
                     </div>
-                    <div class="p-10 md:w-3/5">
+                    <div class="p-6 md:p-10 md:w-3/5">
                         <h4 class="text-xl font-serif font-bold text-navy-900 mb-4">Counsel of Experience, Judgment & Integrity</h4>
                         <p class="text-gray-600 text-sm mb-4 leading-relaxed">Mr. Asoke Majumdar is the Founder & Principal Consultant of LEXRESOURCE. Over a distinguished career spanning decades, he has appeared in civil, criminal, corporate and constitutional matters before the Calcutta High Court, the City Civil & Sessions Courts of Kolkata, and various tribunals.</p>
                         <p class="text-gray-600 text-sm mb-6 leading-relaxed">Known for meticulous preparation and courtroom composure, he personally oversees every brief that enters the firm's chambers — advising business houses, institutions and families with candour and discretion.</p>
@@ -605,18 +613,14 @@
                     </div>
                 </div>
 
-                <!-- Profile 2 -->
                 <div class="bg-cream border border-gray-100 flex flex-col md:flex-row" data-aos="fade-up">
-                    <div class="gradient-overlay p-12 flex flex-col items-center justify-center text-center md:w-2/5 text-white">
-                        
-                        <!-- picture2.jpg added here -->
-                        <img src="images/picture2.jpg" alt="Mr. Sujit Bhattacharya" class="w-28 h-28 rounded-full border-2 border-gold-500 mb-4 bg-navy-900/50 object-cover shadow-lg">
-
+                    <div class="gradient-overlay p-8 md:p-12 flex flex-col items-center justify-center text-center md:w-2/5 text-white">
+                        <img src="images/picture2.jpg" alt="Mr. Sujit Bhattacharya" class="w-40 h-40 md:w-48 md:h-48 rounded-full border-[3px] border-gold-500 mb-6 bg-navy-900/50 object-cover shadow-xl">
                         <h3 class="text-xl font-serif font-bold mb-1">Mr. Sujit Bhattacharya</h3>
                         <p class="text-[0.6rem] tracking-[0.2em] text-gold-500 font-bold mb-6 uppercase">Senior Counsel ·<br>Associate</p>
                         <p class="font-serif italic text-sm text-gray-300">"Wide experience in diverse fields of law."</p>
                     </div>
-                    <div class="p-10 md:w-3/5">
+                    <div class="p-6 md:p-10 md:w-3/5">
                         <h4 class="text-xl font-serif font-bold text-navy-900 mb-4">Senior Counsel & Associate</h4>
                         <p class="text-gray-600 text-sm mb-4 leading-relaxed">Mr. Sujit Bhattacharya serves as Senior Counsel and Associate at Asoke Majumdar & Associates — LEXRESOURCE. He brings wide experience across diverse fields of law.</p>
                         <p class="text-gray-600 text-sm mb-6 leading-relaxed">Together with the firm's Founder & Principal, he jointly provides legal consultation and appears before the court — extending the firm's counsel across its full range of practice.</p>
@@ -634,9 +638,9 @@
     </section>
 
     <!-- Insights -->
-    <section id="insights" class="py-24 bg-cream border-t border-gray-200">
+    <section id="insights" class="py-16 md:py-24 bg-cream border-t border-gray-200 snap-start">
         <div class="container mx-auto max-w-6xl px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                 <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Knowledge</p>
                 <h2 class="text-4xl font-serif text-navy-900 mb-6">Insights & Updates</h2>
                 <div class="w-10 h-1 bg-gold-500 mx-auto mb-6 rounded"></div>
@@ -693,7 +697,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-24 bg-white text-center">
+    <section class="py-16 md:py-24 bg-white text-center snap-start">
         <div class="container mx-auto max-w-4xl px-4" data-aos="zoom-in">
             <p class="text-gold-500 text-xs font-bold tracking-[0.2em] uppercase mb-4">Client Words</p>
             <h2 class="text-4xl font-serif text-navy-900 mb-6">What Our Clients Say</h2>
@@ -702,8 +706,8 @@
 
             <div class="testimonial-slider">
                 <div class="testimonial-slide active" data-index="0">
-                    <svg class="w-16 h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
-                    <p class="text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
+                    <p class="text-xl md:text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
                         "Mr. Majumdar handled our company's contractual dispute with remarkable clarity. His advice was honest, precise, and always in our best interest."
                     </p>
                     <p class="text-sm font-bold tracking-widest text-burgundy uppercase mb-1">Managing Director</p>
@@ -711,8 +715,8 @@
                 </div>
 
                 <div class="testimonial-slide hidden" data-index="1">
-                    <svg class="w-16 h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
-                    <p class="text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
+                    <p class="text-xl md:text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
                         "During a difficult family property matter, the firm guided us with great patience and achieved through mediation what had seemed impossible."
                     </p>
                     <p class="text-sm font-bold tracking-widest text-burgundy uppercase mb-1">Private Client</p>
@@ -720,8 +724,8 @@
                 </div>
 
                 <div class="testimonial-slide hidden" data-index="2">
-                    <svg class="w-16 h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
-                    <p class="text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 mx-auto text-navy-900 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
+                    <p class="text-xl md:text-2xl font-serif italic text-navy-900 mb-8 leading-relaxed max-w-3xl mx-auto">
                         "From incorporation to tax compliance, LEXRESOURCE has been our trusted legal partner for years. We recommend them without reservation."
                     </p>
                     <p class="text-sm font-bold tracking-widest text-burgundy uppercase mb-1">Founder</p>
@@ -747,7 +751,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 relative overflow-hidden">
+    <section id="contact" class="py-16 md:py-24 relative overflow-hidden snap-start">
         <div class="absolute inset-0 bg-gradient-to-br from-[#4a1525] via-[#2a111a] to-[#0a1128] z-0"></div>
         <div class="container mx-auto max-w-5xl px-4 relative z-10 text-center">
             <div data-aos="fade-up">
@@ -769,14 +773,14 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <div class="border border-gold-500/30 p-8 bg-white/5 backdrop-blur-sm hover:border-gold-500/60 transition" data-aos="fade-right" data-aos-delay="100">
+                <div class="border border-gold-500/30 p-6 md:p-8 bg-white/5 backdrop-blur-sm hover:border-gold-500/60 transition" data-aos="fade-right" data-aos-delay="100">
                     <h4 class="text-gold-500 text-xs font-bold tracking-widest uppercase mb-4">Head Office</h4>
                     <div class="flex items-start">
                         <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         <p class="text-gray-300 text-sm leading-relaxed">2/32A, Ashoke Nagar, Tollygunge, Kolkata, West Bengal 700040, India</p>
                     </div>
                 </div>
-                <div class="border border-gold-500/30 p-8 bg-white/5 backdrop-blur-sm hover:border-gold-500/60 transition" data-aos="fade-left" data-aos-delay="200">
+                <div class="border border-gold-500/30 p-6 md:p-8 bg-white/5 backdrop-blur-sm hover:border-gold-500/60 transition" data-aos="fade-left" data-aos-delay="200">
                     <h4 class="text-gold-500 text-xs font-bold tracking-widest uppercase mb-4">Court Chamber</h4>
                     <div class="flex items-start">
                         <svg class="w-5 h-5 text-gold-500 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -788,7 +792,7 @@
     </section>
 
     <!-- Expanded Footer -->
-    <footer class="bg-[#0a1128] text-white pt-20 pb-8 border-t border-gray-800" data-aos="fade-in">
+    <footer class="bg-[#0a1128] text-white pt-16 md:pt-20 pb-8 border-t border-gray-800" data-aos="fade-in">
         <div class="container mx-auto max-w-7xl px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 <!-- Brand -->
@@ -875,7 +879,7 @@
         </div>
     </footer>
 
-    <!-- Back to top button - Fully Functional Now -->
+    <!-- Back to top button -->
     <button id="backToTop" class="fixed bottom-8 right-8 bg-navy-900 text-gold-500 p-3 rounded-full hover:bg-gold-500 hover:text-navy-900 transition shadow-lg z-50">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
     </button>
@@ -978,13 +982,10 @@
             const acceptBtn = document.getElementById('acceptDisclaimer');
             const body = document.body;
 
-            // Check if user has already accepted the disclaimer
             if (!localStorage.getItem('lexresource_disclaimer_accepted')) {
-                // Not accepted yet, show it
                 overlay.classList.remove('hidden');
                 body.classList.add('modal-open');
             } else {
-                // Already accepted, hide it
                 overlay.classList.add('hidden');
                 body.classList.remove('modal-open');
             }
@@ -993,7 +994,6 @@
                 acceptBtn.addEventListener('click', function () {
                     overlay.classList.add('hidden');
                     body.classList.remove('modal-open');
-                    // Save to local storage
                     localStorage.setItem('lexresource_disclaimer_accepted', 'true');
                 });
             }
@@ -1009,7 +1009,6 @@
                 mobileMenu.classList.toggle('hidden');
             });
             
-            // Close menu when a link is clicked
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');

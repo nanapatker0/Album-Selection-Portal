@@ -47,10 +47,9 @@
         }
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 80px; /* Fix for sticky header overlapping sections */
+            scroll-padding-top: 80px;
         }
         
-        /* Stop body scroll when disclaimer is open */
         body.modal-open {
             overflow: hidden;
         }
@@ -204,7 +203,6 @@
             animation: countUp 0.8s ease forwards;
         }
 
-        /* Back to top button styling */
         #backToTop {
             opacity: 0;
             visibility: hidden;
@@ -409,10 +407,10 @@
                 </div>
             </div>
 
-            <!-- Horizontal Swipe Container -->
-            <div class="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
+            <!-- Horizontal Swipe Container (Fixed for Desktop Grid) -->
+            <div class="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible snap-x md:snap-none snap-mandatory pb-8 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
                 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="0">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="0">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 21V7l7-4 7 4v14M9 11h6M9 15h6M9 19h6"/></svg>
                     </div>
@@ -428,7 +426,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v18M5 12h14M8 7h8v10H8z"/></svg>
                     </div>
@@ -442,7 +440,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 20V8m12 12V4M10 20v-8m4 8V8M4 20h16"/></svg>
                     </div>
@@ -457,7 +455,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 11.5l9-7 9 7v8a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-8z"/></svg>
                     </div>
@@ -471,7 +469,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="400">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19h16M7 16V9m5 7V5m5 11v-9"/></svg>
                     </div>
@@ -484,7 +482,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="500">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="500">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 14l4 4L19 4M5 8h14M5 18h9"/></svg>
                     </div>
@@ -498,7 +496,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="600">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="600">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h8M8 12h8M8 17h5M5 7h.01M5 12h.01M5 17h.01M19 7h.01M19 12h.01M19 17h.01"/></svg>
                     </div>
@@ -512,7 +510,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="700">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="700">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4h10v4h3v12H4V8h3V4zm2 4h6"/></svg>
                     </div>
@@ -525,7 +523,7 @@
                     <a href="#contact" class="mt-6 inline-flex text-gold-500 text-xs font-bold tracking-widest uppercase hover:text-navy-900 transition">Enquire <span class="ml-1">→</span></a>
                 </div>
 
-                <div class="w-[85vw] md:w-auto flex-none snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="800">
+                <div class="w-[85vw] md:w-full flex-none md:flex-auto snap-center bg-white p-6 md:p-8 border border-gray-100 hover:shadow-lg transition group" data-aos="fade-up" data-aos-delay="800">
                     <div class="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 text-burgundy group-hover:bg-gold-50 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 5h8v4h3v10H5V9h3V5zm2 0v4h4V5"/></svg>
                     </div>
@@ -1040,7 +1038,7 @@
             });
         });
 
-        // NEW: Magnet/Hook Effect for Mobile (From Practice Areas to Why Choose Us)
+        // Magnet/Hook Effect for Mobile (From Practice Areas to Why Choose Us)
         let lastScrollY = window.scrollY;
         let isSnapping = false;
 
